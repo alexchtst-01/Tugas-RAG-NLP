@@ -1,3 +1,10 @@
 .env
 main.py
 main.ipynb
+data/
+.venv/*
+.env/*
+env/*
+venv/*
+test.ipynb
+*.txt

@@ -13,7 +13,7 @@
 | -- | -- |
 | testanswer.py | to test the prompt and see the template prompt overview |
 | scrapInformation.py | to gain and store into text document from web document `(https)` such as wikipedia etc  |
-| database.py | to gain and store information in vector to database  |
+| database.py | to gain and store information in vector to pine cone database  |
 
 **`testanswer.py`**
 
@@ -23,7 +23,8 @@ in your cli
 
 result 
 
-    Based on the context, I assume you're asking what the Moon is in a general astronomical sense. The Moon is the natural satellite of the Earth, orbiting our planet at an average distance of about 239,000 miles (384,000 kilometers). It's the fifth-largest moon in the solar system and the largest satellite relative to its parent planet. The Moon is a rocky, airless body with no atmosphere, with craters, mountains, and dark volcanic maria (seas) on its surface. It affects Earth's tides, stabilizes our planet's axis, and has played a significant role in human exploration and cultural significance throughout history.
+    Based on the context, I assume you're asking what the Moon is in a general astronomical sense. The Moon is 
+    the natural satellite of the Earth, orbiting our planet at an average distance of about 239,000 miles (384,000 kilometers). It's the fifth-largest moon in the solar system and the largest satellite relative to its parent planet. The Moon is a rocky, airless body with no atmosphere, with craters, mountains, and dark volcanic maria (seas) on its surface. It affects Earth's tides, stabilizes our planet's axis, and has played a significant role in human exploration and cultural significance throughout history.
 
 
 **`scrapInformation.py`**
@@ -40,13 +41,45 @@ output
 
 **`database.py`**
 
-in your cli 
+code implementation
 
-    python database.py
+    # initialization the universal tensor embed
+    Embed = TensorEmbed()
+
+    # pinecone connection
+    pc = Pinecone(api_key=pc_api)
+    spec = ServerlessSpec(
+        cloud='aws',
+        region='us-east-1'
+    )
+
+    pineIndex = 'coba-buat-pinecone'
+    # create index vector database
+    CreatePineConeIndex(
+        pc=pc,
+        indexName=pineIndex,
+        spec=spec
+    )
+
+    # connect to the pinecone index
+    PineConeConnect(
+        pc=pc,
+        index_name=pineIndex
+    )
+
+    # store the information in pinecone index
+    wikipedia = 'data/2024106205954braintumorwikipedia.txt'
+    clevelandclinic = 'data/202410621034braintumorclevelandclinic.txt'
+    aans = 'data/202410621213braintumoraans.txt'
+
+    for name in [wikipedia, clevelandclinic, aans]:
+        StoreVectorToPineCone(Embed, name, index)
 
 output 
 
-    [result]
+    success to store vector in data/2024106205954braintumorwikipedia.txt
+    success to store vector in data/202410621034braintumorclevelandclinic.txt
+    success to store vector in data/202410621213braintumoraans.txt
 
 ## Brief Explanation About RAG
 

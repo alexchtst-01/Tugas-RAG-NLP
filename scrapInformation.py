@@ -1,7 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
-import os 
+import os
 import argparse
+from datetime import datetime
 
 def scrap_documents(url):
     response = requests.get(url)
@@ -22,18 +23,20 @@ def scrap_documents(url):
 
 
 def createDocument(docText, fname):
-    folderPath = "dataDocument"
+    folderPath = "data"
+    now = datetime.now()
+    doc_id = f"{now.year}{now.month}{now.day}{now.hour}{now.minute}{now.second}"
     
     if not os.path.exists(folderPath):
         os.makedirs(folderPath)
-        print('data folder dont exist, creating data folder [dataDocument]')
+        print('data folder dont exist, creating data folder [data]')
     
-    fname = os.path.join(folderPath, fname)
+    fname = os.path.join(folderPath, f"{doc_id}{fname}")
     with open(fname, 'w') as f:
         f.write(docText)
         print(f"Success make file in {fname}")
 
-parser = argparse.ArgumentParser(description="hehe")
+parser = argparse.ArgumentParser(description="sinterKELASSS berjalan diatas es")
 
 parser.add_argument(
     '--url', 
@@ -50,14 +53,9 @@ parser.add_argument(
 )
 
 
-def main():
-    args = parser.parse_args()
-    doc_result = scrap_documents(url=args.url)
-    createDocument(docText=doc_result, fname=args.filename)
-
-if __name__ == "__main__":
-    main()
-
+args = parser.parse_args()
+doc_result = scrap_documents(url=args.url)
+createDocument(docText=doc_result, fname=args.filename)
 
 # manual use
 # doc_result = scrap_documents(url='https://www.mayoclinic.org/diseases-conditions/brain-tumor/symptoms-causes/syc-20350084')

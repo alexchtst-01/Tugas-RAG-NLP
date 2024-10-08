@@ -1,11 +1,11 @@
 # RAG Natural Language Processing
 
 ## Anggota Kelompok
-| NIM | NAMA |
+| Nama | NIM |
 | -- | -- |
 | Alex Cinatra Hutasoit | 22/505820/TK/55377 |
-| Ryan Krsihandi Lukito |  |
-| Yefta Nathaniel |  |
+| Ryan Krsihandi Lukito | 22/497249/TK/54488 |
+| Yefta Nathaniel | 22/492878/TK/53594 |
 
 
 ## File and How To Use
